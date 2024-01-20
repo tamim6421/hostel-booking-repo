@@ -48,15 +48,15 @@ const HeaderMenu = () => {
       <Container>
         <Navbar.Brand className={Style.menuBrand}>
           <Link href="/">
-            {/* <img
+            <img
               className={Style.logo}
-              src="/duclub.png"
+              src="/hostel.jpeg"
               alt=""
               onClick={() => setExpanded(false)}
-            /> */}
-           <div>
+            />
+           {/* <div>
             <span className="text-danger fs-2 fw-bolder">NR</span> <span className="fs-4 text-primary fw-bolder">HOSTEL</span>
-           </div>
+           </div> */}
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle
