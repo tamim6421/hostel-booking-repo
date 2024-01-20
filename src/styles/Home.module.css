@@ -1,0 +1,16 @@
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: underline;
+  margin-bottom: 22px;
+}
+.des {
+  font-size: 18px;
+  line-height: 1.9;
+}
+.custom-image {
+  width: 100%;
+  height: 400px;
+  padding-bottom: 50%; /* This value should be the aspect ratio height / width * 100% */
+  object-fit: cover; /* or "contain" depending on your preference */
+}
