@@ -9,6 +9,8 @@ import { BASE_URL } from "@/utils/api";
 import { useEffect, useState } from "react";
 import { baseImgUrl } from "@/utils/imgUrl";
 import Link from "next/link";
+import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 
 
@@ -17,6 +19,8 @@ export default function RoomDetails() {
     const [data, setData] = useState([]);
     const [seats, setSeats] = useState([])
     const [loading, setLoading] = useState(false);
+    const [token, setToken] = useState(null);
+   
 
     const router = useRouter();
     const { roomID } = router.query;
@@ -38,7 +42,65 @@ export default function RoomDetails() {
       })
     } , [roomID])
     console.log(seats)
-  
+
+    useEffect(() => {
+      const storedCookies = Cookies.get("TOKEN_LOGIN");
+      setToken(storedCookies);
+    }, []);
+    console.log(token)
+
+    const handelBooking = async (seat_id) => {
+      try {
+        const result = await Swal.fire({
+          title: "Are you sure?",
+          text: "You want to book the seat",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sure!",
+        });
+    
+        if (result.isConfirmed) {
+          const requestBody = {
+            seat_id : seat_id,
+          };
+          console.log(seat_id);
+          const response = await axios.post(BASE_URL + `/booking_seat`, requestBody, {
+            headers: {
+              booking_token: token,
+            },
+          });
+          console.log(response.data);
+    
+          if (response.data.status === "success") {
+            Swal.fire({
+              title: `${response.data.messsage}`,
+              text: "Your seat is booked.",
+              icon: "success",
+            });
+          } else {
+            Swal.fire({
+              title: "Booking Failed",
+              text: "There was an issue booking the seat.",
+              icon: "error",
+            });
+          }
+    
+          console.log("booked");
+        }
+      } catch (error) {
+        // Handle the error
+        console.error("Error booking seat:", error);
+        Swal.fire({
+          title: "Error",
+          text: "There was an error booking the seat.",
+          icon: "error",
+        });
+      }
+    };
+    
+
   return (
     <>
       <Head>
@@ -128,9 +190,9 @@ export default function RoomDetails() {
                     <div className="d-flex mt-3">
                       {
                         seats?.map( (seat) => <div key={seat.id}>
-                          <Link href={''}>
+                          <div onClick={() => handelBooking(seat.id)}>
                           <button className="me-4 customButton">{seat?.seat_name}</button>
-                          </Link>
+                          </div>
                         </div>)
                       }
                      

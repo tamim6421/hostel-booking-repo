@@ -1,14 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Style from "@/styles/Booking.module.css";
 import Modal from "react-bootstrap/Modal";
 import { Button } from "react-bootstrap";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { BASE_URL } from "@/utils/api";
 
 const Booking_page = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [rooms, setRoom] = useState('')
+  const [token, setToken] = useState(null);
+  
+  
+
+
+  useEffect(() => {
+    const storedCookies = Cookies.get("TOKEN_LOGIN");
+    setToken(storedCookies);
+  }, []);
+  console.log(token)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(BASE_URL + `/booking_view`, {
+          headers: {
+            booking_token: token,
+          },
+          
+        });
+
+        // Assuming the response.data has a property named 'room'
+        setRoom(response.data.room);
+
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [token])
+
+  console.log(rooms)
+
 
   return (
     <div className="min-vh-100">
