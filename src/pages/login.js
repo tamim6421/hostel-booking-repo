@@ -66,7 +66,7 @@ export default function Login() {
         Cookies.set("USER_NAME", "Tamim", { expires: 2 });
         setLoadingBtn(false);
         toast.success(result.message);
-        router.push("/dashboard");
+        router.push("/");
         reset();
       } else if (result.status === "error") {
         setLoadingBtn(false);
@@ -80,6 +80,7 @@ export default function Login() {
       setLoadingBtn(false);
     }
   };
+  
 
   return (
     <>

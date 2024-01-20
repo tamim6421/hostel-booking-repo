@@ -7,17 +7,24 @@ import Navbar from "react-bootstrap/Navbar";
 import Style from "./headerMenu.module.css";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import { FiLogOut } from "react-icons/fi";
+import { Button } from "react-bootstrap";
 
 const HeaderMenu = () => {
   const router = useRouter();
   const [activeItem, setActiveItem] = useState("");
   const [expanded, setExpanded] = useState(false);
-  const [cookies, setCookies] = useState(null);
+  const [cookies, setCookies] = useState("");
 
-  useEffect(() => {
-    const storedCookies = Cookies.get("loginCookie");
-    setCookies(storedCookies);
-  }, []);
+  // useEffect(() => {
+  //   const storedCookies = Cookies.get("TOKEN_LOGIN");
+  //   setCookies(storedCookies);
+  // }, []);
+
+  // console.log(cookies)
+
+  const storedCookiess = Cookies.get("TOKEN_LOGIN");
+  console.log(storedCookiess)
 
   // Collect path name and show the active button
   useEffect(() => {
@@ -25,18 +32,26 @@ const HeaderMenu = () => {
     setActiveItem(pathname);
   }, [router]);
 
+    // Logout button
+    const handleLogout = () => {
+      const removeCookies = Cookies.remove("TOKEN_LOGIN");
+      setCookies(removeCookies);
+      // localStorage.removeItem("user-info");
+      router.push("/");
+    };
+
   return (
     <Navbar collapseOnSelect sticky="top" expand="lg" className={Style.navbar}>
       <Container>
         <Navbar.Brand className={Style.menuBrand}>
           <Link href="/">
-            {/* <img
+            <img
               className={Style.logo}
               src="/duclub.png"
               alt=""
               onClick={() => setExpanded(false)}
-            /> */}
-            NR HOSTEL
+            />
+           
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle
@@ -48,6 +63,7 @@ const HeaderMenu = () => {
             className={`${Style.nav} ms-auto justify-content-end d-flex menu-right p-0`}
           >
             {/* Home Link */}
+
             <Nav>
               <Link
                 href="/"
@@ -58,10 +74,14 @@ const HeaderMenu = () => {
               >
                 Home
               </Link>
+
+
             </Nav>
-            {cookies ? (
+            {storedCookiess ? (
               <Nav>
-                <Link
+
+
+                {/* <Link
                   href="/dashboard"
                   onClick={() => setExpanded(false)}
                   className={`${
@@ -69,7 +89,33 @@ const HeaderMenu = () => {
                   } ${Style.link}`}
                 >
                   Dashboard
-                </Link>
+                </Link> */}
+
+                <Link
+                    href="/booking_page"
+                    onClick={() => setExpanded(false)}
+                    className={`${
+                      activeItem === "/booking_page" ? Style.active : ""
+                    } ${Style.link}`}
+                  >
+                    Booking infomation
+                  </Link>
+
+                  {/* <dispatchEvent className="mt-3 ">Danger</dispatchEvent> */}
+                  <Button
+                   size="sm"
+                   variant="info"
+                   className="fs-6"
+                    onClick={handleLogout} style={{cursor: "pointer"}}
+                  >
+                     <FiLogOut className="me-1" />
+                   Logout
+                  </Button>
+                    
+                    
+           
+                   
+
               </Nav>
             ) : (
               <>
@@ -83,38 +129,9 @@ const HeaderMenu = () => {
                   >
                     Login
                   </Link>
-                  <Link
-                    href="/booking_page"
-                    onClick={() => setExpanded(false)}
-                    className={`${
-                      activeItem === "/booking_page" ? Style.active : ""
-                    } ${Style.link}`}
-                  >
-                    Booking Page
-                  </Link>
+                
                 </Nav>
-                <Nav>
-                  <Link
-                    href="/registration"
-                    onClick={() => setExpanded(false)}
-                    className={`${
-                      activeItem === "/registration" ? Style.active : ""
-                    } ${Style.link}`}
-                  >
-                    Registration
-                  </Link>
-                </Nav>
-                <Nav>
-                  <Link
-                    href="/privacy"
-                    onClick={() => setExpanded(false)}
-                    className={`${
-                      activeItem === "/privacy" ? Style.active : ""
-                    } ${Style.link}`}
-                  >
-                    Privacy Policy
-                  </Link>
-                </Nav>
+               
               </>
             )}
           </Nav>
