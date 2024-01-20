@@ -1,0 +1,9 @@
+.area {
+    width: 70%;
+    height: 214px;
+    margin:  auto;
+    background-color: rgba(245, 239, 239, 0.736);
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: 2px solid gray;
+}

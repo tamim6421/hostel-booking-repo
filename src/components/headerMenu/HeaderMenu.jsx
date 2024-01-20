@@ -83,6 +83,15 @@ const HeaderMenu = () => {
                   >
                     Login
                   </Link>
+                  <Link
+                    href="/booking_page"
+                    onClick={() => setExpanded(false)}
+                    className={`${
+                      activeItem === "/booking_page" ? Style.active : ""
+                    } ${Style.link}`}
+                  >
+                    Booking Page
+                  </Link>
                 </Nav>
                 <Nav>
                   <Link

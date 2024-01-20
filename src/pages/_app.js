@@ -2,6 +2,7 @@ import HeaderMenu from '@/components/headerMenu/HeaderMenu';
 import '@/styles/globals.css'
 import "bootstrap/dist/css/bootstrap.css";
 
+
 import { ToastContainer } from 'react-toastify';
 import Router from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';

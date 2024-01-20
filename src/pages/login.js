@@ -28,7 +28,10 @@ export default function Login() {
     try {
       setPhone(data.phone);
       setLoadingBtn(true);
-      const response = await fetch(`${BASE_URL}/users/${data.phone}`);
+
+     
+
+      const response = await fetch(`${BASE_URL}/booking_member_login/${data.phone}`);
       const result = await response.json();
       console.log(result);
       if (result.status === "success") {
@@ -51,12 +54,16 @@ export default function Login() {
   const handleCodeSubmit = async (data) => {
     try {
       setLoadingBtn(true);
-      const response = await fetch(`${BASE_URL}/users/${phone}/${data.code}`);
+      console.log(phone)
+      const response = await fetch(`${BASE_URL}/Booking_VerifyLogin/${phone}/${data.code}`);
+      
       const result = await response.json();
+      console.log(result)
+
       if (result.status === "success") {
-        Cookies.set("TOKEN_LOGIN", result.tokenLogin, { expires: 2 });
-        Cookies.set("USER_ID", result.id, { expires: 2 });
-        Cookies.set("USER_NAME", result.name, { expires: 2 });
+        Cookies.set("TOKEN_LOGIN", result.booking_token, { expires: 2 });
+        Cookies.set("USER_ID", 1100, { expires: 2 });
+        Cookies.set("USER_NAME", "Tamim", { expires: 2 });
         setLoadingBtn(false);
         toast.success(result.message);
         router.push("/dashboard");
@@ -95,6 +102,8 @@ export default function Login() {
                     {/* Form header and login Form data */}
                     {/* Title */}
                     {/* <TopTitle title="Phone" /> */}
+
+
                     <Form onSubmit={handleSubmit(handleLoginSubmit)}>
                       <Form.Group className="mb-3" controlId="formEmail">
                         <Form.Label>Phone Number</Form.Label>
