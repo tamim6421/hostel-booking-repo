@@ -11,7 +11,7 @@ const Footer = () => {
                     <p className="m-0">© 2023 DU Club. Developed By
                     
                      <a href="http://ancovabd.com/">
-                     <Image src="/ancova.jpeg" alt="" className="img-fluid custom-image" style={{height:"30px"}} width={100} height={100} />
+                     <Image src="/ancova.png" alt="" className="img-fluid custom-image px-2" style={{height:"20px"}} width={100} height={100} />
                         </a> </p>
                 </div>
             </Container>
