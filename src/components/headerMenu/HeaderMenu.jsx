@@ -16,15 +16,18 @@ const HeaderMenu = () => {
   const [expanded, setExpanded] = useState(false);
   const [cookies, setCookies] = useState("");
 
-  // useEffect(() => {
-  //   const storedCookies = Cookies.get("TOKEN_LOGIN");
-  //   setCookies(storedCookies);
-  // }, []);
+  useEffect(() => {
+    // Fetch cookies when the component mounts
+    const storedCookiess = Cookies.get("TOKEN_LOGIN");
+    setCookies(storedCookiess);
+  }, [router]); // Empty dependency array ensures that this effect runs only once on mount
 
-  // console.log(cookies)
+  console.log(cookies);
 
-  const storedCookiess = Cookies.get("TOKEN_LOGIN");
-  console.log(storedCookiess)
+
+
+  // let storedCookiess = Cookies.get("TOKEN_LOGIN");
+  // setCookies(storedCookiess)
 
   // Collect path name and show the active button
   useEffect(() => {
@@ -45,13 +48,15 @@ const HeaderMenu = () => {
       <Container>
         <Navbar.Brand className={Style.menuBrand}>
           <Link href="/">
-            <img
+            {/* <img
               className={Style.logo}
               src="/duclub.png"
               alt=""
               onClick={() => setExpanded(false)}
-            />
-           
+            /> */}
+           <div>
+            <span className="text-danger fs-2 fw-bolder">NR</span> <span className="fs-4 text-primary fw-bolder">HOSTEL</span>
+           </div>
           </Link>
         </Navbar.Brand>
         <Navbar.Toggle
@@ -77,7 +82,7 @@ const HeaderMenu = () => {
 
 
             </Nav>
-            {storedCookiess ? (
+            {cookies ? (
               <Nav>
 
 
@@ -98,19 +103,19 @@ const HeaderMenu = () => {
                       activeItem === "/booking_page" ? Style.active : ""
                     } ${Style.link}`}
                   >
-                    Booking infomation
+                    Booking Info
                   </Link>
 
                   {/* <dispatchEvent className="mt-3 ">Danger</dispatchEvent> */}
-                  <Button
+                  <p
                    size="sm"
                    variant="info"
-                   className="fs-6"
+                   className="fs-6 mt-3 fw-bold "
                     onClick={handleLogout} style={{cursor: "pointer"}}
                   >
-                     <FiLogOut className="me-1" />
+                     <FiLogOut className="me-1 text-danger fw-bold" />
                    Logout
-                  </Button>
+                  </p>
                     
                     
            
@@ -138,7 +143,20 @@ const HeaderMenu = () => {
         </Navbar.Collapse>
       </Container>
     </Navbar>
+
   );
 };
 
+export async function getServerSideProps() {
+  // Fetch cookies on the server side
+  const storedCookies = Cookies.get("TOKEN_LOGIN") || "";
+  return {
+    props: {
+      cookies: storedCookies,
+    },
+  };
+}
+
 export default HeaderMenu;
+
+

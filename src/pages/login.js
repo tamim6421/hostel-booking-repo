@@ -68,9 +68,9 @@ export default function Login() {
         toast.success(result.message);
         router.push("/");
         reset();
-      } else if (result.status === "error") {
+      } else if (result.status === "fail") {
         setLoadingBtn(false);
-        toast.error(result.message);
+        toast.error(result.data);
       } else {
         setLoadingBtn(false);
         toast.error(result.message);

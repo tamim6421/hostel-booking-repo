@@ -10,7 +10,7 @@ export function middleware(request) {
 
   if (loggedInUserNotAccessPaths) {
     if (authToken) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      return NextResponse.redirect(new URL("/", request.url));
     }
   } else {
     if (!authToken) {
@@ -21,5 +21,5 @@ export function middleware(request) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: "/dashboard/:path*",
+  matcher: "/booking_page",
 };
