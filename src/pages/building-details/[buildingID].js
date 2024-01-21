@@ -35,7 +35,7 @@ export default function BuildingDetails() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={` mt-5`}>
+      <main className="mt-5 min-vh-100">
         <Container>
           <div
             style={{
@@ -50,7 +50,7 @@ export default function BuildingDetails() {
              
             </div>
             <Row>
-              <Col md={12}>
+              <Col md={12} >
                 <Table className="mt-3" striped bordered hover responsive>
                   <thead>
                     <tr>

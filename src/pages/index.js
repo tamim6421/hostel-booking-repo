@@ -46,11 +46,11 @@ export default function Home() {
           <Col key={index} md={3} sm={12}>
                 <div
                   style={{ border: "1px solid gray", borderRadius: "5px" }}
-                   className="mb-4"
+                   className="mb-4 bg-light bg-gradient shadow"
                 >
 
     {item?.building_image !== null ? (
-           <Image src={baseImgUrl + item?.building_image} className="img-fluid w-full" width={300} height={300} alt="" />
+           <Image src={baseImgUrl + item?.building_image} className="img-fluid w-full" width={500} height={500} alt="" />
            //<Image src="https://library.amaderthikana.com/uploads/booking/booking-1264680501.png" className="img-fluid w-full" width={300} height={600} alt="" />
         ) : ( 
             <Image src="/fh.jpg" className="img-fluid w-full" width={300} height={300} alt="" />
@@ -70,7 +70,7 @@ export default function Home() {
                   <h5 style={{ fontSize: "18px" }}>{item?.building_address}</h5>
                   <div className="d-flex justify-content-center align-items-center mt-2">
                        <Link href={`/building-details/${item.id}`} className="d-flex justify-content-center text-decoration-none">
-                            <Button className="py-1 px-3">বিস্তারিত</Button>
+                            <Button className="py-1 btn btn-info text-white px-3">বিস্তারিত</Button>
                       </Link>
                   </div>
                 </div>
