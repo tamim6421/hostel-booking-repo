@@ -15,6 +15,7 @@ const Booking_page = () => {
   const handleShow = () => setShow(true);
   const [rooms, setRoom] = useState([]);
   const [token, setToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const storedCookies = Cookies.get("TOKEN_LOGIN");
@@ -25,31 +26,30 @@ const Booking_page = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true); // Set loading to true before fetching
+  
         const response = await axios.get(BASE_URL + `/booking_view`, {
           headers: {
             booking_token: token,
           },
         });
-
+  
         // Assuming the response.data has a property named 'room'
         setRoom(response?.data?.data || []);
-
-        // console.log(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false); // Set loading to false after fetching, whether successful or not
       }
     };
-
+  
     fetchData();
   }, [token]);
-
   
-  useEffect(() => {
-    console.log(rooms);
-    // Perform any other actions you need with the updated rooms state
-  }, [rooms]);
+  
 
   console.log(rooms);
+  console.log(isLoading);
 
   const handelCancle = async (id) => {
     try {
@@ -62,7 +62,7 @@ const Booking_page = () => {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, Cancel it!",
       });
-
+  
       if (result.isConfirmed) {
         console.log(id);
         const res = await axios.get(BASE_URL + `/booking_cencel/${id}`, {
@@ -71,7 +71,17 @@ const Booking_page = () => {
           },
         });
         console.log(res);
-
+  
+        // After canceling, fetch the updated booking data
+        const updatedResponse = await axios.get(BASE_URL + `/booking_view`, {
+          headers: {
+            booking_token: token,
+          },
+        });
+  
+        // Update the rooms state with the new data
+        setRoom(updatedResponse?.data?.data || []);
+  
         Swal.fire({
           title: "Canceled!",
           text: "Your booking has been canceled.",
@@ -87,7 +97,7 @@ const Booking_page = () => {
       });
     }
   };
-
+  
   return (
     <div className="min-vh-100">
       <h2 className="text-center mt-5 fw-bold text-primary">Booking Details</h2>
