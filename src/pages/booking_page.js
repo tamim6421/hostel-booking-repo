@@ -43,6 +43,12 @@ const Booking_page = () => {
     fetchData();
   }, [token]);
 
+  
+  useEffect(() => {
+    console.log(rooms);
+    // Perform any other actions you need with the updated rooms state
+  }, [rooms]);
+
   console.log(rooms);
 
   const handelCancle = async (id) => {
@@ -59,7 +65,6 @@ const Booking_page = () => {
 
       if (result.isConfirmed) {
         console.log(id);
-
         const res = await axios.get(BASE_URL + `/booking_cencel/${id}`, {
           headers: {
             booking_token: token,
@@ -134,7 +139,7 @@ const Booking_page = () => {
                     Payment Booking
                   </Button>
                   <Button
-                    onClick={() => handelCancle(room?.booking_member_id)}
+                    onClick={() => handelCancle(room?.id)}
                     className="btn btn-danger"
                   >
                     Cancel Booking
