@@ -93,8 +93,8 @@ export default function RoomDetails() {
         // Handle the error
         console.error("Error booking seat:", error);
         Swal.fire({
-          title: "Error",
-          text: "There was an error booking the seat.",
+          title: "Please Login",
+          text: "Please Login And Try To Booked",
           icon: "error",
         });
       }
