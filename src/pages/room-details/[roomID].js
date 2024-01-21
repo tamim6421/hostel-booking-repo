@@ -114,7 +114,7 @@ export default function RoomDetails() {
           <div
             style={{
               background: "#fff",
-              padding: "25px 50px",
+              padding: "15px 20px",
               borderRadius: "20px",
               marginBottom: "30px",
             }}
@@ -155,17 +155,20 @@ export default function RoomDetails() {
    
                 </div>
                 {/* <Image src="/fh.jpg" alt="" className="img-fluid" width={300} height={300} /> */}
-                <div className="">
+                <div className=" mt-3">
                   <h2> Video</h2>
-                  <iframe
-                    width="500"
-                    height="315"
+               <div className="w-100">
+               <iframe 
+               className="w-100"
+                    width="320"
+                    height="250"
                     src={data?.youtube_link}
                     title="YouTube video player"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowfullscreen
                   ></iframe>
+               </div>
                 </div>
               </Col>
               <Col md={6} sm={12}>
@@ -187,11 +190,11 @@ export default function RoomDetails() {
                     <div>
                       <img src="/status.png" alt="" className="img-fluid" />
                     </div>
-                    <div className="d-flex mt-3">
+                    <div className="d-flex gap-2 flex-wrap">
                       {
                         seats?.map( (seat) => <div key={seat.id}>
                           <div onClick={() => handelBooking(seat.id)}>
-                          <button className="me-4 customButton">{seat?.seat_name}</button>
+                          <button className="me-1 mt-2 shadow btn btn-info btn-sm text-white customButton">{seat?.seat_name}</button>
                           </div>
                         </div>)
                       }
