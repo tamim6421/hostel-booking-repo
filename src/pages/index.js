@@ -34,7 +34,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${Style.home} pt-3`}>
+      <main className={`${Style.home} pt-3 min-vh-100`}>
         <Container>
            <div className="headerTitle mb-3">
              <h3 class="text-primary text-center fs-2 fw-bolder ">Book Your Seat</h3>

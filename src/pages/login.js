@@ -94,7 +94,7 @@ export default function Login() {
         <Container>
           <Row>
             <div
-              className="d-flex justify-content-center mb-5 mt-4"
+              className="d-flex justify-content-center mt-5"
               style={{ width: "100%" }}
             >
               {scheneChange ? (

@@ -84,7 +84,9 @@ export default function RoomDetails() {
               title: "Booking Failed",
               text: "There was an issue booking the seat.",
               icon: "error",
+            
             });
+         
           }
     
           console.log("booked");
@@ -97,6 +99,7 @@ export default function RoomDetails() {
           text: "Please Login And Try To Booked",
           icon: "error",
         });
+        router.push('/login')
       }
     };
     
