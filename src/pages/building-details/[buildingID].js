@@ -9,23 +9,20 @@ import axios from "axios";
 import Link from "next/link";
 
 export default function BuildingDetails() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const { buildingID } = router.query;
+  console.log(buildingID);
 
-    const router = useRouter();
-    const { buildingID } = router.query;
-    console.log(buildingID)
-  
-    useEffect(()=>{
-      axios
-         .get(BASE_URL + `/${buildingID}/room_view`)
-         .then((response) => {
-            setData(response?.data);
-         });
-      },[buildingID]);
+  useEffect(() => {
+    axios.get(BASE_URL + `/${buildingID}/room_view`).then((response) => {
+      setData(response?.data);
+    });
+  }, [buildingID]);
 
-      console.log(data);
+  console.log(data);
 
   return (
     <>
@@ -40,45 +37,45 @@ export default function BuildingDetails() {
           <div
             style={{
               background: "#fff",
-              padding: "25px 50px",
+              padding: "10px 10px",
               borderRadius: "20px",
               marginBottom: "30px",
             }}
             className="shadow"
           >
-            <div>
-             
-            </div>
+            <div></div>
             <Row>
-              <Col md={12} >
-                <Table className="mt-3" striped bordered hover responsive>
+              <Col md={12}>
+                <Table className="mt-4" striped bordered hover responsive>
                   <thead>
                     <tr>
-                       <th>Building Name</th>
-                       <th>Floor</th>
-                       <th>Flat No.</th>
-                       <th>Room No.</th>
-                       <th>Total Seat</th>
-                       <th>View Details</th>
+                      <th>Building Name</th>
+                      <th>Floor</th>
+                      <th>Flat No.</th>
+                      <th>Room No.</th>
+                      <th>Total Seat</th>
+                      <th>View Details</th>
                     </tr>
                   </thead>
-                  
 
                   <tbody>
-                  {data?.data?.map((item,index) => (
-                        <tr key={index}>
-                                <td>{item.building_name}</td>
-                                <td>{item.floor_name}</td>
-                                <td>{item.flat_name}</td>
-                                <td>{item.room_name}</td>
-                                <td>{item.total}</td>
-                                <td>
-                     <Link href={`/room-details/${item.room_id}`} className="d-flex justify-content-center text-decoration-none">
-                          <Button className="py-1 px-3">বিস্তারিত</Button>
-                      </Link>
-                                     </td>
+                    {data?.data?.map((item, index) => (
+                      <tr key={index}>
+                        <td>{item.building_name}</td>
+                        <td>{item.floor_name}</td>
+                        <td>{item.flat_name}</td>
+                        <td>{item.room_name}</td>
+                        <td>{item.total}</td>
+                        <td>
+                          <Link
+                            href={`/room-details/${item.room_id}`}
+                            className="d-flex justify-content-center text-decoration-none"
+                          >
+                            <Button className="py-1 px-3">বিস্তারিত</Button>
+                          </Link>
+                        </td>
                       </tr>
-                     ))}
+                    ))}
                   </tbody>
                 </Table>
               </Col>
