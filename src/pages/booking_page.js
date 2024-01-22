@@ -3,11 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Style from "@/styles/Booking.module.css";
 import Modal from "react-bootstrap/Modal";
-import { Button } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { BASE_URL } from "@/utils/api";
 import Swal from "sweetalert2";
+import TableSkeleton from "@/components/Loader/TableSkeleton";
 
 const Booking_page = () => {
   const [show, setShow] = useState(false);
@@ -36,10 +37,11 @@ const Booking_page = () => {
   
         // Assuming the response.data has a property named 'room'
         setRoom(response?.data?.data || []);
+        setIsLoading(false); 
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching, whether successful or not
+        // setIsLoading(false); // Set loading to false after fetching, whether successful or not
       }
     };
   
@@ -49,9 +51,9 @@ const Booking_page = () => {
   
 
   console.log(rooms);
-  console.log(isLoading);
+  // console.log(isLoading);
 
-  const handelCancle = async (id) => {
+  const handleCancel = async (id) => {
     try {
       const result = await Swal.fire({
         title: "Are you sure?",
@@ -100,66 +102,76 @@ const Booking_page = () => {
   
   return (
     <div className="min-vh-100">
-      <h2 className="text-center mt-5 fw-bold text-primary">Booking Details</h2>
+       <Container>
+       
+         {
+          rooms?.length === 0 ?
+          <Container>
+            <p className="text-center fs-3 mt-5 fw-bold text-danger">
+              Impty Booking 
+            </p>
+          </Container> :
+           <Container>
+           <h2 className="text-center mt-5 fw-bold text-primary">Booking Details</h2>
 
-      {rooms?.map((room) => (
-        <div key={rooms.id} className=" mb-5">
-          <div className="shadow-sm  bg-light rounded border w-75 mx-auto">
-            <div className="px-3">
-              <p>Request No : </p>
-              <p>Booking Id: {room?.booking_member_id} </p>
-            </div>
-            <div className="container d-md-flex justify-content-between border-top ">
-              <div className="d-flex ">
-                <div className="text-center d-flex-col text-white">
-                  <div className="bg-primary bg-gradient px-3 py-2">Floor</div>
-                  <div className="bg-primary bg-gradient bg-gradient px-3 py-2">
-                    Flat No{" "}
-                  </div>
-                  <div className="bg-primary bg-gradient px-3 py-2">
-                    Room No{" "}
-                  </div>
-                </div>
-                <div className="d-flex-col text-white">
-                  <div className="bg-info bg-gradient px-5 py-2">
-                    {room?.floor_name}
-                  </div>
-                  <div className=" bg-info bg-gradient px-5 py-2">A - 01</div>
-                  <div className="bg-info bg-gradient px-5 py-2">401, 403</div>
-                </div>
-              </div>
-              <div>
-                <p>
-                  Booking Status: <span className="fw-bold">Pending</span>{" "}
-                </p>
-                <p>Bhoot Er Bari, Frangate, Dhaka</p>
-                <p>
-                  Mobile: <span className="fw-bold"> 010839749</span>
-                </p>
-              </div>
+           {isLoading ? (
+             <Container>
+               <TableSkeleton />
+             </Container>
+           ) : (
+             rooms.map((room) => (
+               <Container key={room.id} className="mb-5">
+                 <div className="shadow-sm bg-light rounded border w-75 mx-auto px-3">
+                   <p>Request No :</p>
+                   <p>Booking Id: {room?.booking_member_id}</p>
 
-              {/* payment and cancle  button */}
-              <div>
-                <p>
-                  Due Amount :{" "}
-                  <span className="fw-bold"> $ {room?.due_amount} </span>{" "}
-                </p>
-                <div className="d-flex align-items-end p-3 ">
-                  <Button variant="primary me-2" onClick={handleShow}>
-                    Payment Booking
-                  </Button>
-                  <Button
-                    onClick={() => handelCancle(room?.id)}
-                    className="btn btn-danger"
-                  >
-                    Cancel Booking
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+                   <div className="container d-md-flex justify-content-between border-top">
+                     <div className="d-flex ">
+                       <div className="text-center d-flex-col text-white">
+                         <div className="bg-primary bg-gradient px-3 py-2">Floor</div>
+                         <div className="bg-primary bg-gradient bg-gradient px-3 py-2">Flat No</div>
+                         <div className="bg-primary bg-gradient px-3 py-2">Room No</div>
+                       </div>
+                       <div className="d-flex-col text-white">
+                         <div className="bg-info bg-gradient px-5 py-2">{room?.floor_name}</div>
+                         <div className=" bg-info bg-gradient px-5 py-2">A - 01</div>
+                         <div className="bg-info bg-gradient px-5 py-2">401, 403</div>
+                       </div>
+                     </div>
+                     <div>
+                       <p>
+                         Booking Status: <span className="fw-bold">Pending</span>{" "}
+                       </p>
+                       <p>Bhoot Er Bari, Frangate, Dhaka</p>
+                       <p>
+                         Mobile: <span className="fw-bold"> 010839749</span>
+                       </p>
+                     </div>
+
+                     <div>
+                       <p>
+                         Due Amount: <span className="fw-bold"> $ {room?.due_amount} </span>{" "}
+                       </p>
+                       <div className="d-flex align-items-end p-3">
+                         <Button variant="primary me-2" onClick={handleShow}>
+                           Payment Booking
+                         </Button>
+                         <Button onClick={() => handleCancel(room?.id)} className="btn btn-danger">
+                           Cancel Booking
+                         </Button>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </Container>
+             ))
+           )}
+         </Container>
+         }
+       
+      </Container>
+
+     
 
       {/* modal  */}
       <div>

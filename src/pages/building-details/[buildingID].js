@@ -7,6 +7,7 @@ import { Container, Row, Col, Button, Table } from "react-bootstrap";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Link from "next/link";
+import TableSkeleton from "@/components/Loader/TableSkeleton";
 
 export default function BuildingDetails() {
   const [data, setData] = useState([]);
@@ -17,8 +18,11 @@ export default function BuildingDetails() {
   console.log(buildingID);
 
   useEffect(() => {
+    setLoading(true)
     axios.get(BASE_URL + `/${buildingID}/room_view`).then((response) => {
+    
       setData(response?.data);
+      setLoading(false)
     });
   }, [buildingID]);
 
@@ -33,7 +37,13 @@ export default function BuildingDetails() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="mt-5 min-vh-100">
-        <Container>
+       <Container>
+        {
+          loading ? (
+            <TableSkeleton></TableSkeleton>
+          ) : 
+          (
+             <Container>
           <div
             style={{
               background: "#fff",
@@ -82,6 +92,9 @@ export default function BuildingDetails() {
             </Row>
           </div>
         </Container>
+          )
+        }
+       </Container>
       </main>
     </>
   );

@@ -11,6 +11,7 @@ import { baseImgUrl } from "@/utils/imgUrl";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
+import DetailsSkeleton from "@/components/Loader/DetailsSkeleton";
 
 
 
@@ -18,7 +19,7 @@ export default function RoomDetails() {
 
     const [data, setData] = useState([]);
     const [seats, setSeats] = useState([])
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [token, setToken] = useState(null);
    
 
@@ -28,17 +29,21 @@ export default function RoomDetails() {
     // console.log(roomID);
 
     useEffect( () =>{
+      setLoading(true)
       axios.get(BASE_URL + `/${roomID}/room_details` )
       .then((res) =>{
         setData(res?.data.data)
+        setLoading(false)
       })
     } ,[roomID])
     console.log(data)
 
     useEffect( () =>{
+      setLoading(true)
       axios.get(BASE_URL + `/${roomID}/seat_details` )
       .then(res =>{
         setSeats(res.data.data)
+        setLoading(false)
       })
     } , [roomID])
     console.log(seats)
@@ -114,6 +119,14 @@ export default function RoomDetails() {
       </Head>
       <main className={` mt-5`}>
         <Container>
+          {
+            loading ? 
+            <div>
+              <DetailsSkeleton></DetailsSkeleton>
+            </div>
+            :
+            <div>
+              <Container>
           <div
             style={{
               background: "#fff",
@@ -201,16 +214,16 @@ export default function RoomDetails() {
                           </div>
                         </div>)
                       }
-                     
-                      {/* <button className="me-4 customButton">102-B</button>
-                      <button className="me-4 customButton">102-C</button>
-                      <button className="customButton">102-D</button> */}
+                  
                     </div>
                   </div>
                 </div>
               </Col>
             </Row>
           </div>
+        </Container>
+            </div>
+          }
         </Container>
       </main>
     </>
