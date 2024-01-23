@@ -31,22 +31,22 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={`${Style.home} pt-3 min-vh-100`}>
-        <Container className="">
+      <main className={` pt-3 min-vh-100`}>
+        <Container className={`${Style.home}`}>
           <div className="headerTitle mb-3">
             <h3 class="text-primary text-center fs-2 fw-bolder ">
               Book Your Seat
             </h3>
           </div>
-          <Row>
-            <Row className="pb-4 pt-4">
+          <Row className={Style.containerA}>
+            <Row className="pb-4  pt-4">
               <Col lg={10} md={8}>
                 {loading ? (
                   <MemberSkeleton />
                 ) : (
                   <Row>
                     {data?.data?.map((item, index) => (
-                      <Col key={index} md={4} sm={12}>
+                      <Col key={index} lg={3} md={4} sm={6}>
                         <div
                           style={{
                             border: "1px solid gray",
@@ -93,7 +93,7 @@ export default function Home() {
                                 <div>
                                   <h5 style={{ fontSize: "18px" }}>
                                     {item && item.building_address
-                                      ? item.building_address.slice(0, 30)
+                                      ? item.building_address.slice(0, 20)
                                       : ""}
                                   </h5>
                                   <span

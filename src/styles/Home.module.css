@@ -14,3 +14,19 @@
   padding-bottom: 50%; /* This value should be the aspect ratio height / width * 100% */
   object-fit: cover; /* or "contain" depending on your preference */
 }
+.home{
+  width: 100%;
+  margin: auto;
+}
+
+@media only screen and (min-width: 767px) {
+
+  .containerA {
+    width: 100%;
+    padding: 10px;
+    margin-left: 70px;
+  }
+  .width{
+    width: 100%;
+  }
+}

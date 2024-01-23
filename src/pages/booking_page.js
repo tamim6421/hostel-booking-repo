@@ -10,6 +10,7 @@ import { BASE_URL } from "@/utils/api";
 import Swal from "sweetalert2";
 import TableSkeleton from "@/components/Loader/TableSkeleton";
 
+
 const Booking_page = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -102,15 +103,9 @@ const Booking_page = () => {
   
   return (
     <div className="min-vh-100">
-       <Container>
+      
        
-         {
-          rooms?.length === 0 ?
-          <Container>
-            <p className="text-center fs-3 mt-5 fw-bold text-danger">
-              Impty Booking 
-            </p>
-          </Container> :
+        
            <Container>
            <h2 className="text-center mt-5 fw-bold text-primary">Booking Details</h2>
 
@@ -120,8 +115,8 @@ const Booking_page = () => {
              </Container>
            ) : (
              rooms.map((room) => (
-               <Container key={room.id} className="mb-5">
-                 <div className="shadow-sm bg-light rounded border w-75 mx-auto px-3">
+               <Container key={room.id} className={`${Style.width} mb-5`}>
+                 <div className="shadow-sm bg-light rounded border w-100 mx-auto px-3">
                    <p>Request No :</p>
                    <p>Booking Id: {room?.booking_member_id}</p>
 
@@ -167,9 +162,7 @@ const Booking_page = () => {
              ))
            )}
          </Container>
-         }
-       
-      </Container>
+     
 
      
 
